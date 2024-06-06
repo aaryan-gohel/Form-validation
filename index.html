@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>validation</title>
+</head>
+
+<body>
+    <!-- <form action="" onsubmit=""> -->
+        <!-- For first name -->
+
+    <div>
+        <span>Enter First Name</span>
+        <input type="text" id="f-Name" onfocusout="firstName()" placeholder="Enter First Nane">
+    </div>
+    <p id="f-name-msg"></p>
+    
+    <!-- for last name -->
+
+    <div>
+        <span>Enter Last Name</span>
+        <input type="text" id="l-Name" onfocusout="lastName()" placeholder="Enter First Nane">
+    </div>
+    <p id="l-name-msg"></p>
+
+    <!-- for email -->
+
+    <div>
+        <span>Enter Email</span>
+        <input type="email" placeholder="Enter emaill" oninput="emailValid()" id="email">
+    </div>
+    <p id="email-msg"></p>
+
+
+    <!-- for Phone no -->
+
+    <div>
+        <span>Enter phone no</span>
+        <input type="text" placeholder="Enter your number" oninput="phoneNuberValid()" id="number">
+    </div>
+    <p id="number-msg"></p>
+
+    <!-- for password -->
+
+    <div>
+        <span>Enter password</span>
+        <input type="password" id="pass" placeholder="Enter password" onfocusout="passwordValid()" >
+    </div>
+    <div><p id="pass-msg"></p></div>
+
+    <!-- for confirm password -->
+
+    <div>
+        <span>confirm password</span>
+        <input type="password" id="confirm-pass" onfocusout="confirmPass()" placeholder="Confirm password">
+    </div>
+    <p id="confirm-pass-msg"></p>
+
+    <!-- for gender -->
+    <input type="radio" id="male" value="male" name="gender">
+    <label>male</label>
+    <input type="radio" id="female" value="female" name="gender">
+    <label>female</label>
+    <input type="radio" id="other" value="other" name="gender">
+    <label>other</label>
+    <p id="gender-msg"></p>
+    <button onclick="validate()">Submit</button>
+    <!-- </form> -->
+    <script src="./index.js"></script>
+</body>
+<script>
+</script>
+</html>
