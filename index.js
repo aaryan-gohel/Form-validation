@@ -172,8 +172,8 @@ function passwordValid() {
         document.getElementById("pass-msg").innerHTML = "";
         passwordError = 0;
         if (pass.length >= 8) {
-            document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital letter ";
-            passwordError = 1;
+            document.getElementById("pass-msg").innerHTML = "";
+            passwordError = 0;
             for (i = 0; i < pass.length; i++) {
                 if (pass.charAt(i) >= "A" && pass.charAt(i) <= "Z") {
                     document.getElementById("pass-msg").innerHTML = "";
