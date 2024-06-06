@@ -1,0 +1,22 @@
+body {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+
+p {
+  color: red;
+  font-weight: 500;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+.main .f-name {
+  width: -moz-fit-content;
+  width: fit-content;
+}/*# sourceMappingURL=index.css.map */
