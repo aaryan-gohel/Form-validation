@@ -14,8 +14,8 @@ let lastNameError = 1;
 let emailError = 1;
 let passwordError = 1;
 let confirmPasswordError = 1;
-let numberError=1;
-let genderError=1;
+let numberError = 1;
+let genderError = 1;
 
 
 function firstName() {
@@ -41,7 +41,7 @@ function firstName() {
 }
 function lastName() {
     let lName = document.getElementById("l-Name").value;
-    if (lName == "" || lName.length > 50 || lName.length <=2) {
+    if (lName == "" || lName.length > 50 || lName.length <= 2) {
         document.getElementById("lastNameMsg").innerHTML = "LastName field must contain characters between 3 to 50";
         lastNameError = 1;
     }
@@ -161,6 +161,8 @@ function emailValid() {
 }
 function passwordValid() {
     let pass = document.getElementById("pass").value;
+    let capitalCount = 0;
+    let smallCount = 0;
     let numCount = 0;
     let specialCount = 0;
 
@@ -174,78 +176,107 @@ function passwordValid() {
         if (pass.length >= 8) {
             document.getElementById("pass-msg").innerHTML = "";
             passwordError = 0;
+
             for (i = 0; i < pass.length; i++) {
                 if (pass.charAt(i) >= "A" && pass.charAt(i) <= "Z") {
-                    document.getElementById("pass-msg").innerHTML = "";
-                    passwordError = 0;
-
-                    for (j = 0; j < pass.length; j++) {
-                        if (pass.charAt(j) >= "a" && pass.charAt(j) <= "a") {
-                            document.getElementById("pass-msg").innerHTML = "";
-                            passwordError = 0;
-                            for (k = 0; k < pass.length; k++) {
-                                for (let l = 0; l < numArray.length; l++) {
-                                    if (pass.charAt(k) == numArray[l]) {
-                                        // console.log("number detected");
-                                        document.getElementById("pass-msg").innerHTML = "";
-                                        passwordError = 0;
-                                        numCount += 1;
-                                        break
-                                    }
-                                    else {
-                                        // console.log("number required in password error");
-                                        document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-                                        passwordError=1;
-
-                                    }
-                                }
-                                if (numCount == 1) {
-                                    for (let m = 0; m < pass.length; m++) {
-                                        for (let n = 0; n < numArray.length; n++) {
-                                            if (pass.charAt(m) == numArray[n] || pass.charAt(m) >= "A" && pass.charAt(i) <= "Z" || pass.charAt(i) >= "a" && pass.charAt(i) <= "z") {
-                                                document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-                                                passwordError=1;
-                                            }
-                                            else {
-                                                document.getElementById("pass-msg").innerHTML = "";
-                                                passwordError=0;
-                                                specialCount += 1;
-                                                break;
-                                            }
-                                        }
-                                        if (specialCount == 1) {
-                                            console.log("object");
-                                            break;
-                                        }
-
-                                    }
-                                    break
-                                }
-                            }
-                            break
-                        }
-                        else {
-                            console.log("small latter required in password error");
-                            document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-                            passwordError=1;
-                        }
-                    }
+                    // document.getElementById("pass-msg").innerHTML = "";
+                    // passwordError = 0;
+                    capitalCount += 1;
                     break
                 }
                 else {
-                    console.log("capital letter required in password error");
-                    document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-                    passwordError=1;
+                    if (capitalCount == 0) {
+                        // document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
+                        // passwordError = 1;
+                    }
+                }
+            }
+            for (j = 0; j < pass.length; j++) {
+                if (pass.charAt(j) >= "a" && pass.charAt(j) <= "z") {
+                    // document.getElementById("pass-msg").innerHTML = "";
+                    // passwordError = 0;
+                    smallCount += 1;
+                    break
+                }
+                else {
+                    if (smallCount == 0) {
+                        // document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
+                        // passwordError = 1;
+                    }
+
                 }
             }
 
+            for (k = 0; k < pass.length; k++) {
+                for (let l = 0; l < numArray.length; l++) {
+                    if (pass.charAt(k) == numArray[l]) {
+                        // document.getElementById("pass-msg").innerHTML = "";
+                        // passwordError = 0;
+                        numCount += 1;
+                        break
+                    }
+                    else {
+                        if (numCount == 0) {
+                            // document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
+                            // passwordError = 1;
+                        }
+                    }
+                }
+                if (numCount == 1) {
+                    break;
+                }
+            }
 
+            for (let m = 0; m < pass.length; m++) {
+                for (let n = 0; n < numArray.length; n++) {
+                    if (pass.charAt(m) == numArray[n] || pass.charAt(m) >= "A" && pass.charAt(i) <= "Z" || pass.charAt(i) >= "a" && pass.charAt(i) <= "z") {
+                        specialCount += 0;
+
+                    }
+                    else {
+                        if (isNaN(pass.charAt(m))) {
+                            let wantedChar = pass.charAt(m)
+                            specialCount += 1;
+                            console.log(wantedChar);
+                        }
+                        break;
+                    }
+                }
+                if (specialCount == 1) {
+                    break;
+                }
+            }
         }
         else {
-            document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-            passwordError=1;
+            document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor";
+            passwordError = 1;
         }
 
+    }
+
+    if (capitalCount == 0 || smallCount == 0 || numCount == 0 || specialCount == 0) {
+        passwordError = 1;
+        if (document.getElementById("pass-msg").innerHTML == "") {
+            if (capitalCount == 0) {
+                document.getElementById("pass-msg").innerHTML = "At least one capital needed";
+            }
+            else if (smallCount == 0) {
+                document.getElementById("pass-msg").innerHTML = "At least one small needed";
+            }
+            else if (numCount == 0) {
+                document.getElementById("pass-msg").innerHTML = "At least one number needed";
+            }
+            else if (specialCount == 0) {
+                document.getElementById("pass-msg").innerHTML = "At least one special-char needed";
+            }
+            else {
+                document.getElementById("pass-msg").innerHTML = " invalid email";
+            }
+        }
+    }
+    else {
+        passwordError = 0;
+        document.getElementById("pass-msg").innerHTML = "";
     }
 }
 function confirmPass() {
@@ -253,14 +284,14 @@ function confirmPass() {
     let pass = document.getElementById("pass").value;
     if (confirmPassword == "") {
         document.getElementById("confirm-pass-msg").innerHTML = "Please Confirm the Password First!!";
-        confirmPasswordError=1; 
+        confirmPasswordError = 1;
     }
     else {
         document.getElementById("confirm-pass-msg").innerHTML = "";
-        confirmPasswordError=0;
+        confirmPasswordError = 0;
         if (confirmPassword != pass) {
             document.getElementById("confirm-pass-msg").innerHTML = "Password dosen't match";
-            confirmPasswordError=1;
+            confirmPasswordError = 1;
         }
 
     }
@@ -280,27 +311,27 @@ function phoneNuberValid() {
     let number = document.getElementById("number").value;
     if (number == "") {
         document.getElementById("number-msg").innerHTML = "Phone number field must not be empty";
-        numberError=1;
+        numberError = 1;
     }
     else {
         if (number.length == 10) {
             document.getElementById("number-msg").innerHTML = "";
-            numberError=0;
+            numberError = 0;
             for (let i = 0; i < number.length; i++) {
                 if (isNaN(number.charAt(i)) || number.charAt(i) == "" || number.charAt(i) == " ") {
                     document.getElementById("number-msg").innerHTML = "Enter Valid phone number";
-                    numberError=1;
+                    numberError = 1;
                     break
                 }
                 else {
                     document.getElementById("number-msg").innerHTML = "";
-                    numberError=0;
+                    numberError = 0;
                 }
             }
         }
         else {
             document.getElementById("number-msg").innerHTML = "Enter Valid phone number";
-            numberError=1;
+            numberError = 1;
         }
     }
 }
@@ -332,11 +363,11 @@ function validate() {
     let gender = document.getElementsByName("gender");
     if (gender[0].checked == false && gender[1].checked == false && gender[2].checked == false) {
         document.getElementById("gender-msg").innerHTML = "Enter gender";
-        genderError=1;
+        genderError = 1;
     }
     else {
         document.getElementById("gender-msg").innerHTML = "";
-        genderError=0;
+        genderError = 0;
     }
 
     // For number
@@ -349,7 +380,7 @@ function validate() {
     // let checkConfirmPasswordFiled=document.getElementById("confirm-pass-msg").value
     // let checkGenderFiled=document.getElementById("gender-msg").value
 
-    if (nameError != 0 || lastNameError != 0 || emailError != 0 || passwordError!=0 || confirmPasswordError!=0 || numberError!=0 || genderError!=0) {
+    if (nameError != 0 || lastNameError != 0 || emailError != 0 || passwordError != 0 || confirmPasswordError != 0 || numberError != 0 || genderError != 0) {
         alert("Enter valid details")
     }
     // if(checkNameField != "" || checkLastName != ""|| checkConfirmPasswordFiled != ""|| checkEmailFiled != ""|| checkNumberFiled != "" || checkPasswordFiled != "" || checkGenderFiled != ""){
