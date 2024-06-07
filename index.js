@@ -16,6 +16,14 @@ let passwordError = 1;
 let confirmPasswordError = 1;
 let numberError = 1;
 let genderError = 1;
+let userData = {
+    fName: "",
+    lName: "",
+    eMail: "",
+    number: "",
+    password: "",
+    gender: ""
+}
 
 
 function firstName() {
@@ -74,7 +82,7 @@ function emailValid() {
     let emailStartError = 0;
     let emailLengthError = 0;
     let specialCharBefore = 0;
-    console.log(dotLocation);
+    // console.log(dotLocation);
 
     if (email == "") {
         emptyEmailError = 1;
@@ -84,11 +92,11 @@ function emailValid() {
         emptyEmailError = 0;
         if (email.charAt(0) >= "a" && email.charAt(0) <= "z" && email.charAt(0) != " ") {
             if (email.length > 3 && email.length <= 320) {
-                console.log(email);
+                // console.log(email);
                 for (let i = 0; i < email.length; i++) {
                     if (email.charAt(i) == "@") {
                         atCount += 1;
-                        console.log(atCount);
+                        // console.log(atCount);
                     }
                     else {
                     }
@@ -140,7 +148,7 @@ function emailValid() {
         for (let j = 0; j < numArray.length; j++) {
             if (email.charAt(i) == numArray[j] || email.charAt(i) >= "A" && email.charAt(i) <= "Z" || email.charAt(i) >= "a" && email.charAt(i) <= "z" || email.charAt(i) == "@" || email.charAt(i) == ".") {
 
-                console.log(email.charAt(i));
+                // console.log(email.charAt(i));
 
             }
             else {
@@ -279,7 +287,7 @@ function passwordValid() {
                         if (isNaN(pass.charAt(m))) {
                             let wantedChar = pass.charAt(m)
                             specialCount += 1;
-                            console.log(wantedChar);
+                            // console.log(wantedChar);
                         }
                         break;
                     }
@@ -393,7 +401,8 @@ function validate() {
 
     // For radio gender
 
-    let gender = document.getElementsByName("gender");
+    let genderVal = document.getElementsByName("gender");
+    let gender=document.getElementsByName("gender");
     if (gender[0].checked == false && gender[1].checked == false && gender[2].checked == false) {
         document.getElementById("gender-msg").innerHTML = "Enter gender";
         genderError = 1;
@@ -405,16 +414,77 @@ function validate() {
     if (nameError != 0 || lastNameError != 0 || emailError != 0 || passwordError != 0 || confirmPasswordError != 0 || numberError != 0 || genderError != 0) {
         alert("Enter valid details")
     }
-    // if(checkNameField != "" || checkLastName != ""|| checkConfirmPasswordFiled != ""|| checkEmailFiled != ""|| checkNumberFiled != "" || checkPasswordFiled != "" || checkGenderFiled != ""){
-
-    //     console.log(checkLastName);
-
-
-    //     alert("Enter valid fields")
-    // }
     else {
         alert("form submited successfully")
+        if (gender[0].checked == true) {
+            genderVal = "male";
+        }
+        if (gender[1].checked == true) {
+            genderVal = "female";
+        }
+        if (gender[2].checked == true) {
+            genderVal = "other";
+        }
+
+        userData = {
+            fName: document.getElementById("f-Name").value,
+            lName: document.getElementById("l-Name").value,
+            eMail: document.getElementById("email").value,
+            number: document.getElementById("number").value,
+            password: document.getElementById("pass").value,
+            gender: genderVal
+        }
+        console.log(userData);
+        document.getElementById("f-Name").value = "",
+            document.getElementById("l-Name").value = "",
+            document.getElementById("email").value = "",
+            document.getElementById("number").value = "",
+            document.getElementById("pass").value = ""
+            if (document.getElementById("confirm-pass").value != "") {
+                document.getElementById("confirm-pass").value = ""
+            }
+            document.getElementsByName("gender").value = ""
     }
+
+}
+
+function hideShowPassword() {
+    let passType = document.getElementById("pass")
+    let confirmpassType = document.getElementById("confirm-pass")
+    if (passType.type == "password" || confirmpassType.type == "password") {
+        passType.type = "text"
+        confirmpassType.type = "text"
+    }
+    else {
+        passType.type = "password"
+        confirmpassType.type = "password"
+
+    }
+}
+function onReset() {
+
+    if (document.getElementById("f-Name").value != "") {
+        document.getElementById("f-Name").value = ""
+    }
+    if (document.getElementById("l-Name").value != "") {
+        document.getElementById("l-Name").value = ""
+    }
+    if (document.getElementById("email").value != "") {
+        document.getElementById("email").value = ""
+    }
+    if (document.getElementById("number").value != "") {
+        document.getElementById("number").value = ""
+    }
+    if (document.getElementById("pass").value != "") {
+        document.getElementById("pass").value = ""
+    }
+    if (document.getElementById("confirm-pass").value != "") {
+        document.getElementById("confirm-pass").value = ""
+    }
+    let selectedGenderRemove = document.getElementsByName("gender");
+    for (let i = 0; i < selectedGenderRemove.length; i++)
+        selectedGenderRemove[i].checked = false;
+
 
 }
 
