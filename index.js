@@ -67,12 +67,16 @@ function emailValid() {
     let atLocation = email.indexOf("@");
     let dotCount = 0;
     let dotLocation = email.lastIndexOf(".")
-    let lastCharAtError=0;
+    let lastCharAtError = 0;
+    let atLeastTwoCharError = 0;
+    let lestTwoCharAfterDot = 0;
+    let emptyEmailError=0;
+    let emailStartError=0;
+    let emailLengthError=0;
     console.log(dotLocation);
 
     if (email == "") {
-        document.getElementById("email-msg").innerHTML = "E-mail field must not be empty";
-        emailError = 1;
+        emptyEmailError=1;
     }
 
     else {
@@ -82,23 +86,18 @@ function emailValid() {
                 for (let i = 0; i < email.length; i++) {
                     if (email.charAt(i) == "@") {
                         atCount = atCount + 1;
-                        // document.getElementById("email-msg").innerHTML = "";
-                        // emailError = 0
                         break
                     }
                     else {
-                        // document.getElementById("email-msg").innerHTML = "";
-                        // emailError = 0;
-
                     }
                 }
-                if(atCount!=0){
+                if (atCount != 0) {
                     for (let i = atLocation; i < email.length; i++) {
                         if (email.charAt(i + 1) == ".") {
                             dotCount += 1;
                         }
                         if (atLocation == email.length - 1) {
-                            lastCharAtError=1;
+                            lastCharAtError = 1;
                             // document.getElementById("email-msg").innerHTML = "missing '.'  after '@' ";
                         }
                         // if (dotCount != 1) {
@@ -106,29 +105,31 @@ function emailValid() {
                         //     emailError = 1;
                         // }
                         else {
-                            document.getElementById("email-msg").innerHTML = "";
-                            emailError = 0;
+                            // document.getElementById("email-msg").innerHTML = "";
+                            // emailError = 0;
                         }
                     }
                 }
                 if (atCount != 1 || email.charAt(atLocation + 1) == "." || email.charAt(atLocation + 2) == "." || atLocation == email.length - 2 || dotLocation == email.length - 2 || dotLocation == email.length - 1) {
                     if (atCount == 1) {
                     }
-                    if (email.charAt(atLocation + 1) == "." || email.charAt(atLocation + 2) == "." || atLocation == email.length - 2) {
+                    if (email.charAt(atLocation + 1) == "." || email.charAt(atLocation + 2) == "." || atLocation == email.length - 2 || atLocation == email.length - 1) {
                         // document.getElementById("email-msg").innerHTML = "Must Enter 2 character after '@' ";
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
+                        // document.getElementById("email-msg").innerHTML = "Invalid Email";
+                        // emailError = 1;
+                        atLeastTwoCharError = 1;
                     }
 
                     if (dotLocation == email.length - 2 || dotLocation == email.length - 1) {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
                         // document.getElementById("email-msg").innerHTML = "Must Enter 2 character after last '.' ";
-                        console.log("error");
+                        // console.log("error");
+                        // document.getElementById("email-msg").innerHTML = "Invalid Email";
+                        // emailError = 1;
+                        lestTwoCharAfterDot = 1;
                     }
                     else {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
+                        // document.getElementById("email-msg").innerHTML = "Invalid Email";
+                        // emailError = 1;
                         // document.getElementById("email-msg").innerHTML = "Must Enter 2 character after '@' ";
                     }
 
@@ -141,14 +142,38 @@ function emailValid() {
                 }
             }
             else {
-                document.getElementById("email-msg").innerHTML = "Email must have minimun length of 4 and max-length of 320";
-                emailError = 1;
+                emailLengthError=1;
             }
         }
         else {
-            document.getElementById("email-msg").innerHTML = "E-mail should be start with alphabets";
-            emailError = 1;
+            emailStartError=1;
         }
+    }
+
+    if (lestTwoCharAfterDot != 0 || atLeastTwoCharError != 0 || lastCharAtError != 0 || atCount == 0 || dotCount >= 3 ||  emptyEmailError!=0 || emailStartError!=0 || emailLengthError!=0) {
+        emailError=1;
+        if (lestTwoCharAfterDot != 0) {
+            document.getElementById("email-msg").innerHTML = "At Least Two Charactor After '.' Required ";
+        }
+        else if(atLeastTwoCharError != 0){
+            document.getElementById("email-msg").innerHTML = "At Least Two Charactor After '@' Required ";
+        }
+        else if(lastCharAtError != 0){
+            document.getElementById("email-msg").innerHTML = "Last char should not be '@' ";
+        }
+        else if(atCount == 0){
+            document.getElementById("email-msg").innerHTML = "One '@' required in E-mail ";
+        }
+        else if(dotCount >= 3){
+            document.getElementById("email-msg").innerHTML = " at least one or at most two '.' allowed in E-mail after '@' ";
+        }
+        else{
+
+        }
+    }
+    else{
+        emailError=0
+        document.getElementById("email-msg").innerHTML = "";
     }
 
 }
