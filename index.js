@@ -14,8 +14,16 @@ let lastNameError = 1;
 let emailError = 1;
 let passwordError = 1;
 let confirmPasswordError = 1;
-let numberError=1;
-let genderError=1;
+let numberError = 1;
+let genderError = 1;
+let userData = {
+    fName: "",
+    lName: "",
+    eMail: "",
+    number: "",
+    password: "",
+    gender: ""
+}
 
 
 function firstName() {
@@ -41,7 +49,7 @@ function firstName() {
 }
 function lastName() {
     let lName = document.getElementById("l-Name").value;
-    if (lName == "" || lName.length > 50 || lName.length <=2) {
+    if (lName == "" || lName.length > 50 || lName.length <= 2) {
         document.getElementById("lastNameMsg").innerHTML = "LastName field must contain characters between 3 to 50";
         lastNameError = 1;
     }
@@ -63,80 +71,61 @@ function lastName() {
 }
 function emailValid() {
     let email = document.getElementById("email").value;
-    let atLocation = email.indexOf("@");
     let atCount = 0;
+    let atLocation = email.indexOf("@");
     let dotCount = 0;
     let dotLocation = email.lastIndexOf(".")
-    console.log(dotLocation);
+    let lastCharAtError = 0;
+    let atLeastTwoCharError = 0;
+    let lestTwoCharAfterDot = 0;
+    let emptyEmailError = 1;
+    let emailStartError = 0;
+    let emailLengthError = 0;
+    let specialCharBefore = 0;
+    // console.log(dotLocation);
 
     if (email == "") {
-        document.getElementById("email-msg").innerHTML = "E-mail field must not be empty";
-        emailError = 1;
+        emptyEmailError = 1;
     }
 
     else {
+        emptyEmailError = 0;
         if (email.charAt(0) >= "a" && email.charAt(0) <= "z" && email.charAt(0) != " ") {
             if (email.length > 3 && email.length <= 320) {
-                console.log(email);
+                // console.log(email);
                 for (let i = 0; i < email.length; i++) {
                     if (email.charAt(i) == "@") {
-                        atCount = atCount + 1;
+                        atCount += 1;
                         // console.log(atCount);
-                        document.getElementById("email-msg").innerHTML = "";
-                        emailError = 0
-                    }
-                    if (atCount != 1) {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
-                        // document.getElementById("email-msg").innerHTML = "E-mail field must contain @ or only one @";
-                        console.log(" @ ni error 0 or one time ");
                     }
                     else {
-                        document.getElementById("email-msg").innerHTML = "";
-                        emailError = 0;
-
                     }
                 }
-                for (let i = atLocation; i < email.length; i++) {
-                    if (email.charAt(i + 1) == ".") {
-                        dotCount += 1;
-                        console.log(dotCount);
-                    }
-                    if (atLocation == email.length - 1) {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
-                        // document.getElementById("email-msg").innerHTML = "missing '.'  after '@' ";
-                    }
-                    if (dotCount != 1) {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
-                        // document.getElementById("email-msg").innerHTML = "only one '.' required after '@' ";
-                        console.log("multiple dot or no dot error");
-                    }
-                    else {
-                        document.getElementById("email-msg").innerHTML = "";
-                        emailError = 0;
+                if (atCount != 0) {
+                    for (let i = atLocation; i < email.length; i++) {
+                        if (email.charAt(i + 1) == ".") {
+                            dotCount += 1;
+                        }
+                        if (atLocation == email.length - 1) {
+                            lastCharAtError = 1;
+                        }
+
+                        else {
+                        }
                     }
                 }
                 if (atCount != 1 || email.charAt(atLocation + 1) == "." || email.charAt(atLocation + 2) == "." || atLocation == email.length - 2 || dotLocation == email.length - 2 || dotLocation == email.length - 1) {
                     if (atCount == 1) {
                     }
-                    if (email.charAt(atLocation + 1) == "." || email.charAt(atLocation + 2) == "." || atLocation == email.length - 2) {
-                        // document.getElementById("email-msg").innerHTML = "Must Enter 2 character after '@' ";
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
+                    if (email.charAt(atLocation + 1) == "." || email.charAt(atLocation + 2) == "." || atLocation == email.length - 2 || atLocation == email.length - 1) {
+                        atLeastTwoCharError = 1;
                     }
 
                     if (dotLocation == email.length - 2 || dotLocation == email.length - 1) {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
-                        // document.getElementById("email-msg").innerHTML = "Must Enter 2 character after last '.' ";
-                        console.log("error");
+                        lestTwoCharAfterDot = 1;
                     }
                     else {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
-                        // document.getElementById("email-msg").innerHTML = "Must Enter 2 character after '@' ";
+
                     }
 
                 }
@@ -148,19 +137,82 @@ function emailValid() {
                 }
             }
             else {
-                document.getElementById("email-msg").innerHTML = "Email must have minimun length of 4 and max-length of 320";
-                emailError = 1;
+                emailLengthError = 1;
             }
         }
         else {
-            document.getElementById("email-msg").innerHTML = "E-mail should be start with alphabets";
-            emailError = 1;
+            emailStartError = 1;
         }
+    }
+    for (let i = 0; i < email.length; i++) {
+        for (let j = 0; j < numArray.length; j++) {
+            if (email.charAt(i) == numArray[j] || email.charAt(i) >= "A" && email.charAt(i) <= "Z" || email.charAt(i) >= "a" && email.charAt(i) <= "z" || email.charAt(i) == "@" || email.charAt(i) == ".") {
+
+                // console.log(email.charAt(i));
+
+            }
+            else {
+                if (isNaN(email.charAt(i))) {
+                    specialCharBefore = 1;
+                }
+            }
+        }
+        if (specialCharBefore == 1) {
+            break;
+        }
+    }
+
+
+    if (lestTwoCharAfterDot != 0 || atLeastTwoCharError != 0 || lastCharAtError != 0 || atCount != 1 || dotCount == 0 || dotCount >= 3 || emptyEmailError != 0 || emailStartError != 0 || emailLengthError != 0 || specialCharBefore != 0) {
+        emailError = 1;
+        if (emptyEmailError != 0) {
+            document.getElementById("email-msg").innerHTML = "Email Field should not be empty";
+        }
+        else if (specialCharBefore != 0) {
+            document.getElementById("email-msg").innerHTML = "only '@' and ' . ' are allowed in special char ";
+        }
+        else if (emailStartError != 0) {
+            document.getElementById("email-msg").innerHTML = "Email should Start with Charactor";
+        }
+        else if (emailLengthError != 0) {
+            document.getElementById("email-msg").innerHTML = "E-mail must contain min-4 and max-320 char ";
+        }
+        else if (atCount == 0) {
+            document.getElementById("email-msg").innerHTML = "Please Enter one '@' in E-mail ";
+        }
+        else if (atCount >= 2) {
+            document.getElementById("email-msg").innerHTML = "Only one '@' in E-mail is allowed ";
+        }
+        else if (lastCharAtError != 0) {
+            document.getElementById("email-msg").innerHTML = "Last char should not be '@' ";
+        }
+        else if (atLeastTwoCharError != 0) {
+            document.getElementById("email-msg").innerHTML = "At Least Two Charactor After '@' Required ";
+        }
+        else if (dotCount == 0) {
+            document.getElementById("email-msg").innerHTML = " at least one '.' Required after '@' ";
+        }
+        else if (dotCount >= 3) {
+            document.getElementById("email-msg").innerHTML = " at least one or at most two '.' allowed in E-mail after '@' ";
+        }
+        else if (lestTwoCharAfterDot != 0) {
+            document.getElementById("email-msg").innerHTML = "At Least Two Charactor After '.' Required ";
+        }
+
+        else {
+
+        }
+    }
+    else {
+        emailError = 0
+        document.getElementById("email-msg").innerHTML = "";
     }
 
 }
 function passwordValid() {
     let pass = document.getElementById("pass").value;
+    let capitalCount = 0;
+    let smallCount = 0;
     let numCount = 0;
     let specialCount = 0;
 
@@ -172,95 +224,124 @@ function passwordValid() {
         document.getElementById("pass-msg").innerHTML = "";
         passwordError = 0;
         if (pass.length >= 8) {
-            document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital letter ";
-            passwordError = 1;
+            document.getElementById("pass-msg").innerHTML = "";
+            passwordError = 0;
+
             for (i = 0; i < pass.length; i++) {
                 if (pass.charAt(i) >= "A" && pass.charAt(i) <= "Z") {
-                    document.getElementById("pass-msg").innerHTML = "";
-                    passwordError = 0;
-
-                    for (j = 0; j < pass.length; j++) {
-                        if (pass.charAt(j) >= "a" && pass.charAt(j) <= "a") {
-                            document.getElementById("pass-msg").innerHTML = "";
-                            passwordError = 0;
-                            for (k = 0; k < pass.length; k++) {
-                                for (let l = 0; l < numArray.length; l++) {
-                                    if (pass.charAt(k) == numArray[l]) {
-                                        // console.log("number detected");
-                                        document.getElementById("pass-msg").innerHTML = "";
-                                        passwordError = 0;
-                                        numCount += 1;
-                                        break
-                                    }
-                                    else {
-                                        // console.log("number required in password error");
-                                        document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-                                        passwordError=1;
-
-                                    }
-                                }
-                                if (numCount == 1) {
-                                    for (let m = 0; m < pass.length; m++) {
-                                        for (let n = 0; n < numArray.length; n++) {
-                                            if (pass.charAt(m) == numArray[n] || pass.charAt(m) >= "A" && pass.charAt(i) <= "Z" || pass.charAt(i) >= "a" && pass.charAt(i) <= "z") {
-                                                document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-                                                passwordError=1;
-                                            }
-                                            else {
-                                                document.getElementById("pass-msg").innerHTML = "";
-                                                passwordError=0;
-                                                specialCount += 1;
-                                                break;
-                                            }
-                                        }
-                                        if (specialCount == 1) {
-                                            console.log("object");
-                                            break;
-                                        }
-
-                                    }
-                                    break
-                                }
-                            }
-                            break
-                        }
-                        else {
-                            console.log("small latter required in password error");
-                            document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-                            passwordError=1;
-                        }
-                    }
+                    // document.getElementById("pass-msg").innerHTML = "";
+                    // passwordError = 0;
+                    capitalCount += 1;
                     break
                 }
                 else {
-                    console.log("capital letter required in password error");
-                    document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-                    passwordError=1;
+                    if (capitalCount == 0) {
+                        // document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
+                        // passwordError = 1;
+                    }
+                }
+            }
+            for (j = 0; j < pass.length; j++) {
+                if (pass.charAt(j) >= "a" && pass.charAt(j) <= "z") {
+                    // document.getElementById("pass-msg").innerHTML = "";
+                    // passwordError = 0;
+                    smallCount += 1;
+                    break
+                }
+                else {
+                    if (smallCount == 0) {
+                        // document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
+                        // passwordError = 1;
+                    }
+
                 }
             }
 
+            for (k = 0; k < pass.length; k++) {
+                for (let l = 0; l < numArray.length; l++) {
+                    if (pass.charAt(k) == numArray[l]) {
+                        // document.getElementById("pass-msg").innerHTML = "";
+                        // passwordError = 0;
+                        numCount += 1;
+                        break
+                    }
+                    else {
+                        if (numCount == 0) {
+                            // document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
+                            // passwordError = 1;
+                        }
+                    }
+                }
+                if (numCount == 1) {
+                    break;
+                }
+            }
 
+            for (let m = 0; m < pass.length; m++) {
+                for (let n = 0; n < numArray.length; n++) {
+                    if (pass.charAt(m) == numArray[n] || pass.charAt(m) >= "A" && pass.charAt(m) <= "Z" || pass.charAt(m) >= "a" && pass.charAt(m) <= "z") {
+                        specialCount += 0;
+
+                    }
+                    else {
+                        if (isNaN(pass.charAt(m))) {
+                            let wantedChar = pass.charAt(m)
+                            specialCount += 1;
+                            // console.log(wantedChar);
+                        }
+                        break;
+                    }
+                }
+                if (specialCount == 1) {
+                    break;
+                }
+            }
         }
         else {
-            document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor and at least one capital, one small, one number and one special charactor ";
-            passwordError=1;
+            document.getElementById("pass-msg").innerHTML = "password must contain of 8 charactor";
+            passwordError = 1;
         }
 
+    }
+
+    if (capitalCount == 0 || smallCount == 0 || numCount == 0 || specialCount == 0) {
+        passwordError = 1;
+        if (document.getElementById("pass-msg").innerHTML == "") {
+            if (capitalCount == 0) {
+                document.getElementById("pass-msg").innerHTML = "At least one capital needed";
+            }
+            else if (smallCount == 0) {
+                document.getElementById("pass-msg").innerHTML = "At least one small needed";
+            }
+            else if (numCount == 0) {
+                document.getElementById("pass-msg").innerHTML = "At least one number needed";
+            }
+            else if (specialCount == 0) {
+                document.getElementById("pass-msg").innerHTML = "At least one special-char needed";
+            }
+            else {
+                document.getElementById("pass-msg").innerHTML = " invalid email";
+            }
+        }
+    }
+    else {
+        passwordError = 0;
+        document.getElementById("pass-msg").innerHTML = "";
     }
 }
 function confirmPass() {
     let confirmPassword = document.getElementById("confirm-pass").value;
     let pass = document.getElementById("pass").value;
     if (confirmPassword == "") {
-        document.getElementById("confirm-pass-msg").innerHTML = "Please Confirm the Password First!!";
-        confirmPasswordError=1; 
+        document.getElementById("confirm-pass-msg").innerHTML = "password dosen't match";
+        confirmPasswordError = 1;
     }
     else {
         document.getElementById("confirm-pass-msg").innerHTML = "";
-        confirmPasswordError=0;
+        confirmPasswordError = 0;
         if (confirmPassword != pass) {
             document.getElementById("confirm-pass-msg").innerHTML = "Password dosen't match";
-            confirmPasswordError=1;
+            confirmPasswordError = 1;
         }
 
     }
@@ -278,90 +359,132 @@ function genderValid() {
 function phoneNuberValid() {
     // console.log("funtion running");
     let number = document.getElementById("number").value;
+    let lessNumberError = 0;
     if (number == "") {
         document.getElementById("number-msg").innerHTML = "Phone number field must not be empty";
-        numberError=1;
+        numberError = 1;
     }
     else {
         if (number.length == 10) {
             document.getElementById("number-msg").innerHTML = "";
-            numberError=0;
+            numberError = 0;
             for (let i = 0; i < number.length; i++) {
                 if (isNaN(number.charAt(i)) || number.charAt(i) == "" || number.charAt(i) == " ") {
                     document.getElementById("number-msg").innerHTML = "Enter Valid phone number";
-                    numberError=1;
+                    numberError = 1;
                     break
                 }
                 else {
                     document.getElementById("number-msg").innerHTML = "";
-                    numberError=0;
+                    numberError = 0;
                 }
             }
         }
         else {
-            document.getElementById("number-msg").innerHTML = "Enter Valid phone number";
-            numberError=1;
+            document.getElementById("number-msg").innerHTML = "Enter 10 numbers in number field";
+            numberError = 1;
         }
+    }
+    if (parseInt(number.charAt(0)) <= 5) {
+        lessNumberError = 1;
+    }
+    if (lessNumberError != 0) {
+        numberError = 1;
+        document.getElementById("number-msg").innerHTML = "number must be start with 6 or greater series";
+    }
+    else {
     }
 }
 
 function validate() {
 
-    // For First name 
-    // for (let index = 0; index < fNameArray.length; index++) {
-    //     for (let i = 0; i < numArray.length; i++) {
-    //         if (fNameArray[index] == numArray[i] || fName == "") {
-    //             document.getElementById("f-namee-msg").innerHTML = uNameError;
-    //         }
-    //     }
-    // }
-    // For password
-    // for (let index = 0; index < password.length; index++) {
-    //     if (password.length < 8) {
-    //         document.getElementById("pass-msg").innerHTML = passError;
-    //     }
-    // }
-
-    // For confirm password
-    // if (confirmPassword != password || confirmPassword == "") {
-    //     document.getElementById("confirm-pass-msg").innerHTML = confirmPassError;
-    // }
 
     // For radio gender
 
-    let gender = document.getElementsByName("gender");
+    let genderVal = document.getElementsByName("gender");
+    let gender=document.getElementsByName("gender");
     if (gender[0].checked == false && gender[1].checked == false && gender[2].checked == false) {
         document.getElementById("gender-msg").innerHTML = "Enter gender";
-        genderError=1;
+        genderError = 1;
     }
     else {
         document.getElementById("gender-msg").innerHTML = "";
-        genderError=0;
+        genderError = 0;
     }
-
-    // For number
-
-    // let checkNameField=document.getElementById("f-namee-msg").value 
-    // let checkLastName=document.getElementById("lastNameMsg").value
-    // let checkEmailFiled=document.getElementById("email-msg").value
-    // let checkNumberFiled=document.getElementById("number-msg").value
-    // let checkPasswordFiled=document.getElementById("pass-msg").value
-    // let checkConfirmPasswordFiled=document.getElementById("confirm-pass-msg").value
-    // let checkGenderFiled=document.getElementById("gender-msg").value
-
-    if (nameError != 0 || lastNameError != 0 || emailError != 0 || passwordError!=0 || confirmPasswordError!=0 || numberError!=0 || genderError!=0) {
+    if (nameError != 0 || lastNameError != 0 || emailError != 0 || passwordError != 0 || confirmPasswordError != 0 || numberError != 0 || genderError != 0) {
         alert("Enter valid details")
     }
-    // if(checkNameField != "" || checkLastName != ""|| checkConfirmPasswordFiled != ""|| checkEmailFiled != ""|| checkNumberFiled != "" || checkPasswordFiled != "" || checkGenderFiled != ""){
-
-    //     console.log(checkLastName);
-
-
-    //     alert("Enter valid fields")
-    // }
     else {
         alert("form submited successfully")
+        if (gender[0].checked == true) {
+            genderVal = "male";
+        }
+        if (gender[1].checked == true) {
+            genderVal = "female";
+        }
+        if (gender[2].checked == true) {
+            genderVal = "other";
+        }
+
+        userData = {
+            fName: document.getElementById("f-Name").value,
+            lName: document.getElementById("l-Name").value,
+            eMail: document.getElementById("email").value,
+            number: document.getElementById("number").value,
+            password: document.getElementById("pass").value,
+            gender: genderVal
+        }
+        console.log(userData);
+        document.getElementById("f-Name").value = "",
+            document.getElementById("l-Name").value = "",
+            document.getElementById("email").value = "",
+            document.getElementById("number").value = "",
+            document.getElementById("pass").value = ""
+            if (document.getElementById("confirm-pass").value != "") {
+                document.getElementById("confirm-pass").value = ""
+            }
+            document.getElementsByName("gender").value = ""
     }
+
+}
+
+function hideShowPassword() {
+    let passType = document.getElementById("pass")
+    let confirmpassType = document.getElementById("confirm-pass")
+    if (passType.type == "password" || confirmpassType.type == "password") {
+        passType.type = "text"
+        confirmpassType.type = "text"
+    }
+    else {
+        passType.type = "password"
+        confirmpassType.type = "password"
+
+    }
+}
+function onReset() {
+
+    if (document.getElementById("f-Name").value != "") {
+        document.getElementById("f-Name").value = ""
+    }
+    if (document.getElementById("l-Name").value != "") {
+        document.getElementById("l-Name").value = ""
+    }
+    if (document.getElementById("email").value != "") {
+        document.getElementById("email").value = ""
+    }
+    if (document.getElementById("number").value != "") {
+        document.getElementById("number").value = ""
+    }
+    if (document.getElementById("pass").value != "") {
+        document.getElementById("pass").value = ""
+    }
+    if (document.getElementById("confirm-pass").value != "") {
+        document.getElementById("confirm-pass").value = ""
+    }
+    let selectedGenderRemove = document.getElementsByName("gender");
+    for (let i = 0; i < selectedGenderRemove.length; i++)
+        selectedGenderRemove[i].checked = false;
+
 
 }
 
