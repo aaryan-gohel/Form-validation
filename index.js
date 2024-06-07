@@ -283,7 +283,7 @@ function confirmPass() {
     let confirmPassword = document.getElementById("confirm-pass").value;
     let pass = document.getElementById("pass").value;
     if (confirmPassword == "") {
-        document.getElementById("confirm-pass-msg").innerHTML = "Please Confirm the Password First!!";
+        document.getElementById("confirm-pass-msg").innerHTML = "password dosen't match";
         confirmPasswordError = 1;
     }
     else {
