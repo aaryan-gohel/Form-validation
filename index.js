@@ -63,10 +63,11 @@ function lastName() {
 }
 function emailValid() {
     let email = document.getElementById("email").value;
-    let atLocation = email.indexOf("@");
     let atCount = 0;
+    let atLocation = email.indexOf("@");
     let dotCount = 0;
     let dotLocation = email.lastIndexOf(".")
+    let lastCharAtError=0;
     console.log(dotLocation);
 
     if (email == "") {
@@ -81,41 +82,33 @@ function emailValid() {
                 for (let i = 0; i < email.length; i++) {
                     if (email.charAt(i) == "@") {
                         atCount = atCount + 1;
-                        // console.log(atCount);
-                        document.getElementById("email-msg").innerHTML = "";
-                        emailError = 0
-                    }
-                    if (atCount != 1) {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
-                        // document.getElementById("email-msg").innerHTML = "E-mail field must contain @ or only one @";
-                        console.log(" @ ni error 0 or one time ");
+                        // document.getElementById("email-msg").innerHTML = "";
+                        // emailError = 0
+                        break
                     }
                     else {
-                        document.getElementById("email-msg").innerHTML = "";
-                        emailError = 0;
+                        // document.getElementById("email-msg").innerHTML = "";
+                        // emailError = 0;
 
                     }
                 }
-                for (let i = atLocation; i < email.length; i++) {
-                    if (email.charAt(i + 1) == ".") {
-                        dotCount += 1;
-                        console.log(dotCount);
-                    }
-                    if (atLocation == email.length - 1) {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
-                        // document.getElementById("email-msg").innerHTML = "missing '.'  after '@' ";
-                    }
-                    if (dotCount != 1) {
-                        document.getElementById("email-msg").innerHTML = "Invalid Email";
-                        emailError = 1;
-                        // document.getElementById("email-msg").innerHTML = "only one '.' required after '@' ";
-                        console.log("multiple dot or no dot error");
-                    }
-                    else {
-                        document.getElementById("email-msg").innerHTML = "";
-                        emailError = 0;
+                if(atCount!=0){
+                    for (let i = atLocation; i < email.length; i++) {
+                        if (email.charAt(i + 1) == ".") {
+                            dotCount += 1;
+                        }
+                        if (atLocation == email.length - 1) {
+                            lastCharAtError=1;
+                            // document.getElementById("email-msg").innerHTML = "missing '.'  after '@' ";
+                        }
+                        // if (dotCount != 1) {
+                        //     document.getElementById("email-msg").innerHTML = "Invalid Email";
+                        //     emailError = 1;
+                        // }
+                        else {
+                            document.getElementById("email-msg").innerHTML = "";
+                            emailError = 0;
+                        }
                     }
                 }
                 if (atCount != 1 || email.charAt(atLocation + 1) == "." || email.charAt(atLocation + 2) == "." || atLocation == email.length - 2 || dotLocation == email.length - 2 || dotLocation == email.length - 1) {
