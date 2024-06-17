@@ -328,6 +328,18 @@ function passwordValid() {
         passwordError = 0;
         document.getElementById("pass-msg").innerHTML = "";
     }
+    password = document.getElementById("pass").value;
+    let confirmPassword = document.getElementById("confirm-pass").value;
+    if (confirmPassword != password && confirmPassword!="") {
+        document.getElementById("confirm-pass-msg").innerHTML = "Password dosen't match";
+        confirmPasswordError = 1;
+    }
+    if (confirmPassword == password && confirmPassword!="") {
+        document.getElementById("confirm-pass-msg").innerHTML = "";
+        confirmPasswordError = 0;
+    }
+
+
 }
 function confirmPass() {
     let confirmPassword = document.getElementById("confirm-pass").value;
@@ -339,7 +351,7 @@ function confirmPass() {
     else {
         document.getElementById("confirm-pass-msg").innerHTML = "";
         confirmPasswordError = 0;
-        if (confirmPassword != pass) {
+        if (confirmPassword != password) {
             document.getElementById("confirm-pass-msg").innerHTML = "Password dosen't match";
             confirmPasswordError = 1;
         }
@@ -413,6 +425,27 @@ function validate() {
     }
     if (nameError != 0 || lastNameError != 0 || emailError != 0 || passwordError != 0 || confirmPasswordError != 0 || numberError != 0 || genderError != 0) {
         alert("Enter valid details")
+        if(nameError != 0){
+        document.getElementById("f-namee-msg").innerHTML = "Enter valid name";
+        }
+        if(lastNameError != 0){
+        document.getElementById("lastNameMsg").innerHTML = "Enter valid last Name";
+        }
+        if(emailError != 0){
+        document.getElementById("email-msg").innerHTML = "Enter valid email";
+        }
+        if(confirmPasswordError != 0){
+        document.getElementById("confirm-pass-msg").innerHTML = "password not match";
+        }
+        if(numberError != 0){
+        document.getElementById("number-msg").innerHTML = "Enter valid number";
+        }
+        if(passwordError != 0){
+        document.getElementById("pass-msg").innerHTML = "Enter valid password";
+        }
+        if(genderError != 0){
+        document.getElementById("gender-msg").innerHTML = "please enter gender";
+        }
     }
     else {
         alert("form submited successfully")
@@ -450,16 +483,27 @@ function validate() {
 
 function hideShowPassword() {
     let passType = document.getElementById("pass")
-    let confirmpassType = document.getElementById("confirm-pass")
-    if (passType.type == "password" || confirmpassType.type == "password") {
+    // let confirmpassType = document.getElementById("confirm-pass")
+    if (passType.type == "password") {
         passType.type = "text"
-        confirmpassType.type = "text"
+        // confirmpassType.type = "text"
     }
     else {
         passType.type = "password"
+        // confirmpassType.type = "password"
+
+    }
+}
+function hideShowConfirmPassword(){
+    let confirmpassType = document.getElementById("confirm-pass")
+    if (confirmpassType.type == "password") {
+        confirmpassType.type = "text"
+    }
+    else {
         confirmpassType.type = "password"
 
     }
+
 }
 function onReset() {
 
@@ -484,7 +528,12 @@ function onReset() {
     let selectedGenderRemove = document.getElementsByName("gender");
     for (let i = 0; i < selectedGenderRemove.length; i++)
         selectedGenderRemove[i].checked = false;
-
+    if(document.getElementById("checkBox").checked){
+        document.getElementById("checkBox").checked=false;
+    }
+    if(document.getElementById("confirmCheckBox").checked){
+        document.getElementById("confirmCheckBox").checked=false;
+    }
 
 }
 

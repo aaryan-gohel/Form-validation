@@ -40,7 +40,7 @@
 
         <div class="number">
             <span>Enter phone no</span>
-            <input type="text" placeholder="Enter your number" oninput="phoneNuberValid()" id="number">
+            <input type="text" placeholder="Enter your number" oninput="phoneNuberValid()" onfocusout="phoneNuberValid()" id="number">
         </div>
         <p id="number-msg"></p>
 
@@ -48,8 +48,9 @@
 
         <div class="password">
             <span>Enter password</span>
-            <input type="password" id="pass" placeholder="Enter password" oninput="confirmPass()" onfocusout="passwordValid()">
-            <input type="checkbox" onclick="hideShowPassword()">View Password
+            <input type="password" id="pass" placeholder="Enter password" oninput="passwordValid()" onfocusout="passwordValid()" >
+            <!-- onfocusout="confirmPass()" -->
+            <input type="checkbox" id="checkBox" onclick="hideShowPassword()">View Password
         </div>
         <div>
             <p id="pass-msg"></p>
@@ -59,8 +60,8 @@
 
         <div class="confirm-password">
             <span>confirm password</span>
-            <input type="password" id="confirm-pass" onfocusout="confirmPass()" placeholder="Confirm password">
-            <!-- <input type="checkbox" onclick="hideShowPassword()">View Password -->
+            <input type="password" id="confirm-pass" oninput="confirmPass()" onfocusout="confirmPass()" placeholder="Confirm password">
+            <input type="checkbox" id="confirmCheckBox" onclick="hideShowConfirmPassword()">View Password
 
         </div>
         <p id="confirm-pass-msg"></p>
